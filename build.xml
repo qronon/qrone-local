@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     2005/08/05 16:47:07                                                        
+
+     project    
+     description
+                   
+     Administrator                                                                
+     ====================================================================== -->
+<project name="project" default="jar">
+    <description>
+            description 
+    </description>
+	<property name="src" value="src"/>
+	<property name="bin" value="bin"/>
+	<property name="tmp" value="tmp"/>
+	<property name="lib.dir" value="C:\Users\Qronon\Java Libraries"/>
+	<property name="javadoc" value="doc"/>
+	<property name="output.dir" value=""/>
+	<property name="qrone-local.jar" value="qrone-local-0.0.6.jar"/>
+    	
+    <!-- ================================= 
+          target: jar              
+         ================================= -->
+    <target name="unjar" depends="compile">
+    	<!-- The order is important here. Rhino MUST be unjarred first!
+    	             (some of our own classes will override the Rhino classes) -->
+        <unjar src="${lib.dir}/cssparser-0.9.5/cssparser-0.9.5.jar" dest="${bin}"/>
+        <unjar src="${lib.dir}/cssparser-0.9.5/css-selectors-1.0.1.jar" dest="${bin}"/>
+        <unjar src="${lib.dir}/cssparser-0.9.5/sac.jar" dest="${bin}"/>
+        <unjar src="${lib.dir}/htmlparser-1.2.1/htmlparser-1.2.1.jar" dest="${bin}"/>
+        <unjar src="${lib.dir}/yuicompressor-2.4.2/lib/jargs-1.0.jar" dest="${bin}"/>
+        <unjar src="${lib.dir}/yuicompressor-2.4.2/lib/rhino-1.6R7.jar" dest="${bin}"/>
+        <unjar src="${lib.dir}/jetty-6.1.24/jetty-6.1.24.jar" dest="${bin}"/>
+        <unjar src="${lib.dir}/jetty-6.1.24/jetty-util-6.1.24.jar" dest="${bin}"/>
+        <unjar src="${lib.dir}/jetty-6.1.24/servlet-api-2.5-20081211.jar" dest="${bin}"/>
+        <unjar src="${lib.dir}/swt-3.5.2-win32-win32-x86/swt.jar" dest="${bin}"/>
+    	<unjar src="${lib.dir}/jdbm-1.0/lib/jdbm-1.0.jar" dest="${bin}"/>
+    	<unjar src="${lib.dir}/mysql-connector-java-5.1.13/mysql-connector-java-5.1.13-bin.jar" dest="${bin}"/>
+    	<unjar src="${lib.dir}/commons-codec-1.4/commons-codec-1.4.jar" dest="${bin}"/>
+    	<unjar src="${lib.dir}/java_memcached-release_2.5.1/java_memcached-release_2.5.1.jar" dest="${bin}"/>
+    	<unjar src="${lib.dir}/jyaml-1.3/jyaml-1.3.jar" dest="${bin}"/>
+    	<unjar src="${lib.dir}/mongodb-mongo-java-driver-2.0/mongo-2.0.jar" dest="${bin}"/>
+    	<unjar src="${lib.dir}/jsonic-1.2.0/jsonic-1.2.0.jar" dest="${bin}"/>    	
+    </target>
+	
+    <target name="jar">
+		<jar basedir="${bin}" destfile="${output.dir}${qrone-local.jar}">
+			<manifest>
+				<attribute name="Main-Class" value="org.qrone.r7.QrONECompressor"/>
+			</manifest>
+    	</jar>
+    </target>
+
+    <!-- ================================= 
+          target: clean              
+         ================================= -->
+    <target name="clean">
+		<delete dir="${javadoc}"/>
+		<delete dir="${bin}"/>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: compile                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="compile">
+    	<mkdir dir="${bin}"/>
+        <javac srcdir="${src}"
+         destdir="${bin}"
+         classpath="./"
+         debug="on"
+	/>
+    </target>
+</project>
+
